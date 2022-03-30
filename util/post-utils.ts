@@ -1,15 +1,4 @@
-interface ITag {
-  id: number;
-  tag: string;
-}
-
-interface IPost {
-  id: number;
-  title: string;
-  description: string;
-  image: string;
-  tags: ITag[];
-}
+import { IPost } from "../interfaces";
 
 export const posts: IPost[] = [
   {

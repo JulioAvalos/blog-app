@@ -1,15 +1,16 @@
 import '../styles/globals.css';
 import type { AppProps } from 'next/app';
-import Navbar from './layout/Navbar';
+import Layout from '../components/layout/Layout';
+import Head from 'next/head';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <>
-      <Navbar />
-      <div className='py-12 bg-white'>
-        <Component {...pageProps} />
-      </div>
-    </>
+    <Layout>
+      <Head>
+        <meta name='viewport' content='width=device-width, initial-scale=1' />
+      </Head>
+      <Component {...pageProps} />
+    </Layout>
   );
 }
 

@@ -1,16 +1,7 @@
 // import { Disclosure, Menu, Transition } from '@headlessui/react';
 import Link from 'next/link';
-
-interface INavigation {
-  menu: string;
-  href: string;
-  current: boolean;
-}
-
-const navigation: INavigation[] = [
-  { menu: 'Publicaciones', href: '/posts', current: false },
-  { menu: 'Contacto', href: '/contact', current: false },
-];
+import { navigation } from '../../util/menu-util';
+import Sidebar from './Sidebar';
 
 const Navbar = () => {
   return (
@@ -21,9 +12,9 @@ const Navbar = () => {
           <p className='self-center'>Blog</p>
         </a>
       </Link>
-      <nav className='self-center'>
+      <nav className='invisible md:visible self-center'>
         <ul className='flex justify-center gap-6'>
-          {navigation?.map(({ menu, href, current }, index) => (
+          {navigation?.filter(({menu}) => !menu.includes("Inicio")).map(({ menu, href, current }, index) => (
             <li
               key={`menu-item-${index}`}
               className={`text-white ${current ? 'underline' : ''}`}
@@ -32,6 +23,9 @@ const Navbar = () => {
             </li>
           ))}
         </ul>
+      </nav>
+      <nav className={`md:hidden self-center`}>
+        <Sidebar />
       </nav>
     </header>
   );
