@@ -9,12 +9,17 @@ interface ITag {
   tag: string;
 }
 
+export interface IPosts {
+  posts: IPost[];
+}
+
 export interface IPost {
   id: number;
   title: string;
-  description: string;
-  image: string;
-  tags: ITag[];
+  description?: string;
+  content?: string;
+  image?: string;
+  tags?: ITag[];
 }
 
 export interface INavigation {

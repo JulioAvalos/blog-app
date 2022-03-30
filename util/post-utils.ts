@@ -3,7 +3,7 @@ import { IPost } from "../interfaces";
 export const posts: IPost[] = [
   {
     id: 1,
-    title: 'Mountain',
+    title: 'Mountain-1',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, Nonea! Maiores et perferendis eaque, exercitationem praesentium nihil.',
     image:
@@ -25,7 +25,7 @@ export const posts: IPost[] = [
   },
   {
     id: 2,
-    title: 'Mountain',
+    title: 'Mountain-2',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, Nonea! Maiores et perferendis eaque, exercitationem praesentium nihil.',
     image:
@@ -47,7 +47,7 @@ export const posts: IPost[] = [
   },
   {
     id: 3,
-    title: 'Mountain',
+    title: 'Mountain-3',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, Nonea! Maiores et perferendis eaque, exercitationem praesentium nihil.',
     image:
@@ -69,7 +69,7 @@ export const posts: IPost[] = [
   },
   {
     id: 4,
-    title: 'Mountain',
+    title: 'Mountain-4',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, Nonea! Maiores et perferendis eaque, exercitationem praesentium nihil.',
     image:
@@ -91,7 +91,7 @@ export const posts: IPost[] = [
   },
   {
     id: 5,
-    title: 'Mountain',
+    title: 'Mountain-5',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, Nonea! Maiores et perferendis eaque, exercitationem praesentium nihil.',
     image:
@@ -113,7 +113,7 @@ export const posts: IPost[] = [
   },
   {
     id: 6,
-    title: 'Mountain',
+    title: 'Mountain-6',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, Nonea! Maiores et perferendis eaque, exercitationem praesentium nihil.',
     image:
