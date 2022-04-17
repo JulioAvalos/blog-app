@@ -4,7 +4,7 @@ const Contact = () => {
   return (
     <>
       <Head>
-        <title>Blog App - Contact </title>
+        <title>Acerca de mi - Blog App</title>
         <meta
           name='description'
           content='I post about programming and web development'

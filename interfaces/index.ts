@@ -4,7 +4,7 @@ export interface IFeature {
   icon: string;
 }
 
-interface ITag {
+export interface ITag {
   id: number;
   tag: string;
 }
@@ -16,9 +16,11 @@ export interface IPosts {
 export interface IPost {
   id: number;
   title: string;
-  description?: string;
+  createdAt: string;
   content?: string;
+  author?: string;
   image?: string;
+  urlSlug?: string;
   tags?: ITag[];
 }
 

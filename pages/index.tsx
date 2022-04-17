@@ -1,14 +1,19 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
+import PostCard from '../components/posts/Post';
+import { IPost } from '../interfaces';
 import { features } from '../util/feature-util';
+import { posts } from '../util/post-utils';
 
 const Home: NextPage = () => {
+  const lastPost: IPost = posts.slice(-1)[0];
+  console.log('last: ',lastPost);
+
   return (
     <>
-    
       <Head>
-        <title>Blog App</title>
+        <title>Inicio - Blog App</title>
         <meta
           name='description'
           content='I post about programming and web development'
@@ -24,8 +29,7 @@ const Home: NextPage = () => {
             Espacio para casos de uso
           </p>
           <p className='mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto'>
-            Se muestra casos especiales que se han encontrado en algunas
-            tecnologias y soluciones propuestas para solucionarlas
+            Noticias y tendencias de tecnologia y en el ecosistema de la programacion
           </p>
         </div>
         <div className='mt-10'>
@@ -46,6 +50,25 @@ const Home: NextPage = () => {
               </div>
             ))}
           </dl>
+          <div>
+            <p className='flex text-center mt-4 text-xl text-gray-700 font-bold'>
+              Ultima publicacion
+            </p>
+            <div className='flex justify-center pt-5'>
+              <div className='w-96'>
+                <PostCard
+                  id={lastPost.id}
+                  title={lastPost.title}
+                  urlSlug={lastPost.urlSlug}
+                  image={lastPost.image}
+                  createdAt={lastPost.createdAt}
+                  author={lastPost.author}
+                  tags={lastPost.tags}
+                  index={1}
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </>

@@ -1,26 +1,50 @@
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Head from 'next/head';
-import { IPost } from '../../interfaces/index';
+import Image from 'next/image';
+import Link from 'next/link';
+import { FaArrowLeft } from 'react-icons/fa';
+import { IPost, IPosts } from '../../interfaces/index';
+import { NotFoundImage } from '../../util/constants';
+import { posts } from '../../util/post-utils';
 
-interface IPostDetailPageProps {
+type IPostDetailPageProps = {
   post: IPost;
-}
+};
 
 const PostDetailPage = ({ post }: IPostDetailPageProps) => {
   return (
     <>
       <Head>
-        <title>Blog App - Post Detail </title>
+        <title>{post.title} - Blog App</title>
         <meta
           name='description'
           content='I post about programming and web development'
         />
       </Head>
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
-        <h2 className='text-black font-bold'>Detalle</h2>
-        <p>{post.id}</p>
-        <p>{post.title}</p>
-        <p>{post.content}</p>
+        <Link href='/posts'>
+          <div className='flex underline cursor-pointer '>
+            <FaArrowLeft size='20' />
+            <p className='ml-2 self-center'>Volver a las publicaciones</p>
+          </div>
+        </Link>
+        <div className='flex flex-col items-center pt-4'>
+          <h2 className='text-5xl text-stone-800 font-bold pb-10'>
+            {post.title}
+          </h2>
+          <Image
+            src={post.image || NotFoundImage}
+            width={500}
+            height={300}
+            alt={post.title}
+          />
+          <p className='text-stone-500 pt-2 font-mono '>
+            Autor: {post.author} - {post.createdAt}
+          </p>
+        </div>
+        <div className='text-black font-semibold pt-5'>
+          <p>{post.content}</p>
+        </div>
       </div>
     </>
   );
@@ -28,15 +52,22 @@ const PostDetailPage = ({ post }: IPostDetailPageProps) => {
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const { params } = context;
-  const { slug } = params;
+  const { slug }: any = params;
 
-  // const postData = getPostData(slug);
+  const postData: IPost | undefined = posts.find((post) =>
+    post.urlSlug?.includes(slug)
+  );
+
   return {
     props: {
       post: {
-        id: 1,
-        title: 'Mountain-1',
-        content: 'lorem ipsum',
+        id: postData?.id,
+        title: postData?.title,
+        image: postData?.image,
+        content: postData?.content,
+        author: postData?.author,
+        createdAt: postData?.createdAt,
+        tags: postData?.tags,
       },
     },
     revalidate: 600,
@@ -44,14 +75,8 @@ export const getStaticProps: GetStaticProps = async (context) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const slugs = [
-    'Mountain-1',
-    'Mountain-2',
-    'Mountain-3',
-    'Mountain-4',
-    'Mountain-5',
-    'Mountain-6',
-  ];
+  const slugs = posts.map((pageName) => pageName.urlSlug);
+
   return {
     paths: slugs.map((slug) => ({ params: { slug: slug } })),
     fallback: false,
