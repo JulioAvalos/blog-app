@@ -4,24 +4,19 @@ export interface IFeature {
   icon: string;
 }
 
-export interface ITag {
-  id: number;
-  tag: string;
-}
-
 export interface IPosts {
   posts: IPost[];
 }
 
 export interface IPost {
-  id: number;
+  _id: string;
   title: string;
   createdAt: string;
-  content?: string;
-  author?: string;
-  image?: string;
-  urlSlug?: string;
-  tags?: ITag[];
+  content: string;
+  author: string;
+  image: string;
+  slug: string;
+  tags: string[];
 }
 
 export interface INavigation {

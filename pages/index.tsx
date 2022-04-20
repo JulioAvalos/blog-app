@@ -2,13 +2,15 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import PostCard from '../components/posts/Post';
+import { usePosts } from '../hooks/usePosts';
 import { IPost } from '../interfaces';
 import { features } from '../util/feature-util';
 import { posts } from '../util/post-utils';
 
 const Home: NextPage = () => {
-  const lastPost: IPost = posts.slice(-1)[0];
-  console.log('last: ',lastPost);
+  // const lastPost: IPost = posts.slice(-1)[0];
+
+  const { posts, isLoading } = usePosts('/posts/last');
 
   return (
     <>
@@ -29,7 +31,8 @@ const Home: NextPage = () => {
             Espacio para casos de uso
           </p>
           <p className='mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto'>
-            Noticias y tendencias de tecnologia y en el ecosistema de la programacion
+            Noticias y tendencias de tecnologia y en el ecosistema de la
+            programacion
           </p>
         </div>
         <div className='mt-10'>
@@ -56,16 +59,18 @@ const Home: NextPage = () => {
             </p>
             <div className='flex justify-center pt-5'>
               <div className='w-96'>
-                <PostCard
-                  id={lastPost.id}
-                  title={lastPost.title}
-                  urlSlug={lastPost.urlSlug}
-                  image={lastPost.image}
-                  createdAt={lastPost.createdAt}
-                  author={lastPost.author}
-                  tags={lastPost.tags}
-                  index={1}
-                />
+                {posts && posts[0] && (
+                  <PostCard
+                    id={posts[0]._id}
+                    title={posts[0].title}
+                    urlSlug={posts[0].slug}
+                    image={posts[0].image}
+                    createdAt={posts[0].createdAt}
+                    author={posts[0].author}
+                    tags={posts[0].tags}
+                    index={1}
+                  />
+                )}
               </div>
             </div>
           </div>

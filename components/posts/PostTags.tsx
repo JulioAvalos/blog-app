@@ -1,19 +1,16 @@
-import { ITag } from '../../interfaces';
-
 interface IPostTags {
-  index: number;
-  tags?: ITag[];
+  tags?: string[];
 }
 
-function PostTags({ tags = [], index }: IPostTags) {
+function PostTags({ tags = [] }: IPostTags) {
   return (
     <div className='px-6 pb-2'>
-      {tags?.map(({ id, tag }, subIndex) => (
+      {tags?.map((value, subIndex) => (
         <span
-          key={`post-item-${index}-tag-${subIndex}`}
+          key={`post-item-tag-${subIndex}`}
           className='inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2'
         >
-          {tag}
+          {value}
         </span>
       ))}
     </div>

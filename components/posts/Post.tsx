@@ -3,15 +3,16 @@ import Link from 'next/link';
 import { ITag } from '../../interfaces';
 import PostDetails from './PostDetail';
 import PostTags from './PostTags';
+import { FiEdit } from 'react-icons/fi';
 
 interface IPostCard {
-  id: number;
+  id: string;
   title: string;
   urlSlug?: string;
   image?: string;
   createdAt: string;
   author?: string;
-  tags?: ITag[];
+  tags?: string[];
   index: number;
 }
 
@@ -44,7 +45,17 @@ function PostCard({
         createdAt={createdAt}
         urlSlug={urlSlug}
       />
-      <PostTags index={index} tags={tags} />
+      <PostTags tags={tags} />
+      <div className='px-6 pb-4'>
+        <Link href={`/posts/update/${id}`}>
+        <button className='bg-cyan-500 hover:bg-cyan-400 text-white rounded-full px-5 py-2 flex'>
+          <div className='self-center pr-2'>
+            <FiEdit />
+          </div>
+          <p>Actualizar</p>
+        </button>
+        </Link>
+      </div>
     </div>
   );
 }

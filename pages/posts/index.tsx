@@ -1,22 +1,24 @@
 import { useEffect, useState } from 'react';
-import { GetStaticProps } from 'next';
 import Head from 'next/head';
 import AllPosts from '../../components/posts/PostList';
-import { IPosts } from '../../interfaces';
-import { posts } from '../../util/post-utils';
+import { usePosts } from '../../hooks/usePosts';
+import { Loading } from '../../components/ui/Loading';
+import { CgFileAdd } from 'react-icons/cg';
+import Link from 'next/link';
 
-const AllPostsPage = ({ posts }: IPosts) => {
+const AllPostsPage = () => {
   const [searchWord, setSearchWord] = useState<string>('');
-  const [filteredPosts, setFilteredPosts] = useState(posts);
+  const [filter, setFilter] = useState<string>('');
+
+  const { posts, isLoading } = usePosts(
+    filter ? `/posts?search=${filter}` : '/posts'
+  );
 
   useEffect(() => {
     let delayDebounce: ReturnType<typeof setTimeout>;
     if (searchWord !== null || searchWord !== '') {
       delayDebounce = setTimeout(() => {
-        const filtered = [...posts].filter((post) =>
-          post?.title.toUpperCase().includes(searchWord.toUpperCase())
-        );
-        setFilteredPosts(filtered);
+        setFilter(searchWord);
       }, 900);
     }
     return () => clearTimeout(delayDebounce);
@@ -35,7 +37,16 @@ const AllPostsPage = ({ posts }: IPosts) => {
         <h2 className='text-base text-stone-600 font-semibold tracking-wide uppercase'>
           Publicaciones
         </h2>
-
+        <div className='pt-2'>
+          <Link href={`/posts/create`}>
+            <button className='bg-cyan-500 hover:bg-cyan-400 text-white rounded-full px-5 py-2 flex'>
+              <div className='self-center pr-2'>
+                <CgFileAdd />
+              </div>
+              <p>Agregar</p>
+            </button>
+          </Link>
+        </div>
         <div className='py-5'>
           <input
             type='text'
@@ -48,19 +59,18 @@ const AllPostsPage = ({ posts }: IPosts) => {
             onChange={(event) => setSearchWord(event?.target.value)}
           />
         </div>
-
-        <AllPosts posts={filteredPosts} />
+        {isLoading ? (
+          <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
+            {['', '', '', '', '', ''].map((value, index) => (
+              <Loading key={`loading-${index}`} />
+            ))}
+          </div>
+        ) : (
+          <AllPosts posts={posts} />
+        )}
       </div>
     </>
   );
-};
-
-export const getStaticProps: GetStaticProps = async () => {
-  return {
-    props: {
-      posts: posts,
-    },
-  };
 };
 
 export default AllPostsPage;

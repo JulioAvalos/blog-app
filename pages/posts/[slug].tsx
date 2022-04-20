@@ -3,9 +3,9 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FaArrowLeft } from 'react-icons/fa';
-import { IPost, IPosts } from '../../interfaces/index';
+import { dbPosts } from '../../database';
+import { IPost } from '../../interfaces/index';
 import { NotFoundImage } from '../../util/constants';
-import { posts } from '../../util/post-utils';
 
 type IPostDetailPageProps = {
   post: IPost;
@@ -50,36 +50,33 @@ const PostDetailPage = ({ post }: IPostDetailPageProps) => {
   );
 };
 
-export const getStaticProps: GetStaticProps = async (context) => {
-  const { params } = context;
-  const { slug }: any = params;
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const { slug = '' } = params as { slug: string };
+  const post = await dbPosts.getPostBySlug(slug);
 
-  const postData: IPost | undefined = posts.find((post) =>
-    post.urlSlug?.includes(slug)
-  );
+  if (!post) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    };
+  }
 
   return {
     props: {
-      post: {
-        id: postData?.id,
-        title: postData?.title,
-        image: postData?.image,
-        content: postData?.content,
-        author: postData?.author,
-        createdAt: postData?.createdAt,
-        tags: postData?.tags,
-      },
+      post,
     },
     revalidate: 600,
   };
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const slugs = posts.map((pageName) => pageName.urlSlug);
+  const slugs = await dbPosts.getAllPostSlugs();
 
   return {
-    paths: slugs.map((slug) => ({ params: { slug: slug } })),
-    fallback: false,
+    paths: slugs.map(({ slug }) => ({ params: { slug } })),
+    fallback: 'blocking',
   };
 };
 
