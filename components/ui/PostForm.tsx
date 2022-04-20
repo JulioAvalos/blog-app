@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { FaSave } from 'react-icons/fa';
 import { IPost } from '../../interfaces';
+import { NotFoundImage } from '../../util/constants';
 
 interface IPostForm {
   postData?: IPost | any;
@@ -103,7 +104,7 @@ export default function PostForm({ postData, onSubmit }: IPostForm) {
       </div>
       <div className='pt-4'>
         <Image
-          src={imageSelected()}
+          src={imageSelected() || NotFoundImage}
           width={400}
           height={200}
           alt='image-sample'

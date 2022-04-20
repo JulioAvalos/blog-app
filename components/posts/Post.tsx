@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { ITag } from '../../interfaces';
 import PostDetails from './PostDetail';
 import PostTags from './PostTags';
 import { FiEdit } from 'react-icons/fi';
