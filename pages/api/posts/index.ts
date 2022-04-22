@@ -49,7 +49,7 @@ const getPosts = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
 const savePost = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   await db.connect();
-
+  console.log('entro a guardar post')
   const { title } = req.body;
   
   const dt = new Date();
@@ -58,12 +58,16 @@ const savePost = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   
   const body = {
     ...req.body,
-    createAt: formattedDate,
+    createdAt: formattedDate,
     slug: slugGenerator,
     tags: ['programacion', 'tecnologia']
   }
 
-  console.log('body', body);
+  const post = new Post({
+    ...body
+  });
+
+  await post.save();
 
   await db.disconnect();
 
@@ -73,7 +77,7 @@ const savePost = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
 const updatePost = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   await db.connect();
-  const { title } = req.body;
+  const { title, _id } = req.body;
   
   const dt = new Date();
   const slugGenerator = title.toLowerCase().replace(/\s+/g, '-');
@@ -86,7 +90,7 @@ const updatePost = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     tags: ['programacion', 'tecnologia']
   }
 
-  console.log('body', body);
+  await Post.findOneAndUpdate({ _id }, body, { new: true});
 
   await db.disconnect();
 

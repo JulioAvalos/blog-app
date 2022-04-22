@@ -1,13 +1,14 @@
-
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import Link from 'next/link';
 import { MdOutlineMenu } from 'react-icons/md';
 import { CgClose } from 'react-icons/cg';
 
 import { navigation } from '../../util/menu-util';
+import { AuthContext } from '../../context';
 
 const Sidebar = () => {
   const [open, setOpen] = useState(false);
+  const { user, isLoggedIn, logout } = useContext(AuthContext);
   return (
     <>
       {!open ? (
@@ -45,6 +46,17 @@ const Sidebar = () => {
               </Link>
             </li>
           ))}
+          {isLoggedIn ? (
+            <li className={`text-white py-2`} onClick={logout}>
+              <a className='cursor-pointer'>Logout</a>
+            </li>
+          ) : (
+            <li className={`text-white py-2`}>
+              <Link href='/auth/login'>
+                <a onClick={() => setOpen(false)}>Login</a>
+              </Link>
+            </li>
+          )}
         </ul>
       </div>
       <div

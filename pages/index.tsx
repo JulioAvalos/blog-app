@@ -16,10 +16,6 @@ const Home: NextPage = () => {
     <>
       <Head>
         <title>Inicio - Blog App</title>
-        <meta
-          name='description'
-          content='I post about programming and web development'
-        />
       </Head>
 
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>

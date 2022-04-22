@@ -1,8 +1,10 @@
 import Image from 'next/image';
-import { useState } from 'react';
-import { FaSave } from 'react-icons/fa';
+import Link from 'next/link';
+import { useState, useContext } from 'react';
+import { FaArrowLeft, FaSave } from 'react-icons/fa';
 import { IPost } from '../../interfaces';
 import { NotFoundImage } from '../../util/constants';
+import { AuthContext } from '../../context/auth/AuthContext';
 
 interface IPostForm {
   postData?: IPost | any;
@@ -19,8 +21,9 @@ const imageList = [
 ];
 
 export default function PostForm({ postData, onSubmit }: IPostForm) {
+  const { user } = useContext(AuthContext);
   const [title, setTitle] = useState(postData?.title || '');
-  const [author, setAuthor] = useState(postData?.author || '');
+  const [author, setAuthor] = useState(postData?.author || user?.name || '');
   const [content, setContent] = useState(postData?.content || '');
   const [image, setImage] = useState(postData?.image || '');
 
@@ -43,6 +46,14 @@ export default function PostForm({ postData, onSubmit }: IPostForm) {
 
   return (
     <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
+  <div className='pb-4'>
+  <Link href='/posts'>
+        <div className='flex underline cursor-pointer '>
+          <FaArrowLeft size='20' />
+          <p className='ml-2 self-center'>Volver a las publicaciones</p>
+        </div>
+      </Link>
+  </div>
       <div className='font-bold text-2xl pb-2'>
         {postData ? 'Actualizar Publicacion' : 'Nueva Publicacion'}
       </div>
@@ -68,6 +79,7 @@ export default function PostForm({ postData, onSubmit }: IPostForm) {
           autoComplete='given-name'
           placeholder='Titulo'
           className='appearance-none rounded-lg relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-stone-500 focus:border-stone-500 focus:z-10 sm:text-sm'
+          disabled={true}
           value={author}
           onChange={(event) => setAuthor(event?.target.value)}
         />

@@ -6,10 +6,6 @@ function Custom404() {
     <>
       <Head>
         <title>404 No se encontro el contenido - Blog App </title>
-        <meta
-          name='description'
-          content='I post about programming and web development'
-        />
       </Head>
       <div className='flex flex-col items-center text-center'>
         <p className='text-7xl text-base text-stone-600 font-semibold tracking-wide uppercase'>

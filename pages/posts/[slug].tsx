@@ -16,10 +16,6 @@ const PostDetailPage = ({ post }: IPostDetailPageProps) => {
     <>
       <Head>
         <title>{post.title} - Blog App</title>
-        <meta
-          name='description'
-          content='I post about programming and web development'
-        />
       </Head>
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
         <Link href='/posts'>
@@ -57,7 +53,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   if (!post) {
     return {
       redirect: {
-        destination: '/',
+        destination: '/404',
         permanent: false,
       },
     };
